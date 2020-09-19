@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link href="styles.css" rel="stylesheet" />
+    <script src="jquery.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.28.0/moment.min.js"></script>
+    <script src="data_generator.js"></script>
+  </head>
+  <body >
+    <nav class="navBar">
+      <h1>Welcome To Twitter</h1>
+      <div class="users"></div>
+    </nav>
+    <div class='form'></div>
+    <div class="wrapp"></div>
+
+
+
+
+    <script>
+      // $(document).ready(function(){
+        var $body = $('body .wrapp');
+        // $body.html('');
+        var index = streams.home.length - 1;
+        var userId=0;
+        while(index >= 0){
+          var tweet = streams.home[index];
+          var $tweet = $('<div></div>');
+          $tweet.attr('id', 'outer');
+          switch(tweet.user){
+            case 'shawndrost':$tweet.addClass('shawndrost') 
+            break;
+            case 'douglascalhoun':$tweet.addClass('douglascalhoun') 
+            break;
+            case 'sharksforcheap':$tweet.addClass('sharksforcheap') 
+            break;
+            case 'mracus':$tweet.addClass('mracus') 
+            break;
+          }
+          var tweetBody=$("<h3></h3>")
+          var tweetDiv= $('<div></div>');
+          tweetDiv.addClass('tweetDiv')
+          var tweetButton=$('<button>Delete tweet</button>')
+          tweetButton.attr('id', `${userId++}`);
+          var tweetTime=$('<h5></h5>')
+          tweetBody.text('@' + tweet.user + ': ' + tweet.message);
+          tweetTime.text("created at" + " "+moment().format('lll') )
+          tweetBody.appendTo($tweet)
+          tweetTime.appendTo(tweetDiv)
+          tweetButton.appendTo(tweetDiv)
+          tweetDiv.appendTo($tweet)
+          $tweet.appendTo($body);
+          index -= 1;
+        }
+        // setting the time intervals
+         // new date function
+          setInterval(function(){
+            var index = streams.home.length - 1;
+            while(index >= 0){
+              $('h5').text("created at" + " "+parseTwitterDate(tdate) )
+              index -= 1;
+            }
+           }, 1000);
+
+        // users buttons
+        var userButton1=$('<button>douglascalhoun</button>')
+        var userButton2=$('<button>mracus</button>')
+        var userButton3=$('<button>sharksforcheap</button>')
+        var userButton4=$('<button>shawndrost</button>')
+        userButton1.appendTo('.users')
+        userButton2.appendTo('.users')
+        userButton3.appendTo('.users')
+        userButton4.appendTo('.users')
+        
+        //user profile form
+        var inputForm=$('<input type="text" id=inputForm/>')
+        var formBtn=$('<button id=formBtn>Add new tweet</button>')
+    
+        //userId to know the user profile
+        var userId=0
+        userButton4.on('click',function(){
+          $('.shawndrost').show()
+          $('.douglascalhoun').hide()
+          $('.sharksforcheap').hide()
+          $('.mracus').hide()
+
+          inputForm.appendTo('.form')
+          formBtn.appendTo('.form')
+          $('.form').show()
+
+          $('h1').text('Welcome Shawndrost')
+
+          userId=1;
+        })
+
+        userButton3.on('click',function(){
+          $('.shawndrost').hide()
+          $('.douglascalhoun').hide()
+          $('.sharksforcheap').show()
+          $('.mracus').hide()
+
+          inputForm.appendTo('.form')
+          formBtn.appendTo('.form')
+          $('.form').show()
+
+          $('h1').text('Welcome Sharksforcheap')
+
+          userId=2;
+        })
+
+        userButton2.on('click',function(){
+          $('.shawndrost').hide()
+          $('.douglascalhoun').hide()
+          $('.sharksforcheap').hide()
+          $('.mracus').show()
+
+          inputForm.appendTo('.form')
+          formBtn.appendTo('.form')
+          $('.form').show()
+
+
+          $('h1').text('Welcome Mracus')
+
+          userId=3;
+        })
+
+        userButton1.on('click',function(){
+          $('.shawndrost').hide()
+          $('.douglascalhoun').show()
+          $('.sharksforcheap').hide()
+          $('.mracus').hide()
+
+          inputForm.appendTo('.form')
+          formBtn.appendTo('.form')
+          $('.form').show()
+
+          $('h1').text('Welcome Douglascalhoun')
+          userId=4;
+        })
+
+        var home=$('<button>HOME</button>')
+        home.appendTo('.users')
+
+        home.on('click',function(){
+          $('.shawndrost').show()
+          $('.douglascalhoun').show()
+          $('.sharksforcheap').show()
+          $('.mracus').show()
+
+          $('.form').hide()
+
+          $('h1').text('Welcome twitter')
+
+          userId =0
+        })
+
+      //new Date function
+        var tdate=new Date()
+        function parseTwitterDate(tdate) {
+    var system_date = new Date(Date.parse(tdate));
+    var user_date = new Date();
+    var diff = Math.floor((user_date - system_date) / 1000);
+    if (diff <= 1) {return "just now";}
+    if (diff < 20) {return diff + " seconds ago";}
+    if (diff < 60) {return "less than a minute ago";}
+    if (diff <= 90) {return "one minute ago";}
+    if (diff <= 3540) {return Math.round(diff / 60) + " minutes ago";}
+    if (diff <= 5400) {return "1 hour ago";}
+    if (diff <= 86400) {return Math.round(diff / 3600) + " hours ago";}
+    return "on " + system_date;
+}
+setInterval(function(){
+  parseTwitterDate(tdate)}, 1000);
+
+
+  //creating new tweets
+  var count =100
+  formBtn.on('click',function(){
+            
+          var tweetUser=''
+          var $tweet = $('<div></div>');
+          $tweet.attr('id', 'outer');
+          var tweetBody=$("<h3></h3>")
+          var tweetDiv= $('<div></div>');
+          tweetDiv.addClass('tweetDiv')
+          var tweetButton=$('<button>Delete tweet</button>')
+          tweetButton.attr('id', `${count++}`);
+          // var tweetTime=$('<h5></h5>')
+          // var tweetBody=$("<h3></h3>")
+          // var tweetDiv= $('<div></div>');
+          // tweetDiv.addClass('tweetDiv')
+          // var tweetButton=$('<button>Delete tweet</button>')
+          var tweetTime=$('<h5 class=newInput></h5>')
+          // tweetTime.addClass(count)
+          
+    if(userId===1){//the user is shawn
+     tweetUser='shawndros'
+     
+    }else if(userId===2){//Sharks
+      tweetUser='sharksforcheap'
+    }else if(userId===3){//marcos
+      tweetUser='mracus'
+    }else if(userId===4){//douglas
+      tweetUser='douglascalhoun'
+    }
+    switch(tweet.user){
+            case 'shawndrost':$tweet.addClass('shawndrost') 
+            break;
+            case 'douglascalhoun':$tweet.addClass('douglascalhoun') 
+            break;
+            case 'sharksforcheap':$tweet.addClass('sharksforcheap') 
+            break;
+            case 'mracus':$tweet.addClass('mracus') 
+            break;
+          }
+    tweetBody.text('@' + tweetUser + ': ' + inputForm.val());
+    tweetBody.appendTo($tweet)
+    tweetTime.appendTo(tweetDiv)
+    tweetButton.appendTo(tweetDiv)
+    tweetDiv.appendTo($tweet)
+    $tweet.appendTo($body);
+     
+    inputForm.val('')
+
+  })
+
+  //deleting the tweets
+$('.tweetDiv button').on('click',function(e){
+  var firstDiv=e.target.parentElement
+  var secondDiv=firstDiv.parentElement
+  secondDiv.remove()
+  // secondDiv.parentNode.removeChild(secondDiv);
+
+})
+
+      // });
+
+    </script>
+  </body>
+</html>
